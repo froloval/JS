@@ -52,17 +52,49 @@
   <script>
     "use strict";
 
-    function PostES5(autor, text, data_text) {
+    function PostES5(autor, text) {
       this.autor = autor;
       this.text = text;
-      this.data_text = data_text;
-    };
-
-    PostES5.prototype.edit = function (new_text) {
-      this.text = new_text;
+      this.updateAT = new Date();
     }
 
+    PostES5.prototype.edit = function (text) {
+      this.text = text;
+      this.updateAT = new Date();
+    }
+    function AttachedPostES5() {
+      PostES5.call(this, autor, text)
+      this.highlighted = false;
+    }
 
+    AttachedPostES5.prototype = Object.create(PostES5.prototype);
+    AttachedPostES5.prototype.constructor = AttachedPostES5;
+
+    AttachedPostES5.prototype.makeTextHighlighted = function (value) {
+      this.highlighted = true;
+      this.updateAT = new Date();
+    }
+
+    class PostES6 {
+      constructor(autor, text) {
+        this.autor = autor;
+        this.text = text;
+        this.updateAT = new Date();
+      }
+      edit(text) {
+        this.text = text;
+        this.updateAT = new Date();
+      }
+    }
+    class AttachedPostES6 extends PostES6 {
+      highlighted = false;
+
+      makeTextHighlighted(value) {
+        this.highlighted = true;
+        this.updateAT = new Date();
+      }
+
+    }
 
   // Здесь пишем решение, данный комментарий необходимо стереть.
   </script>
