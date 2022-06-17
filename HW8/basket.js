@@ -42,7 +42,15 @@ function getTotalBasketPrise() {
     return Object.values(basket).reduce((acc, product) => acc + product.count * product.price, 0)
 }
 function renderProductInBasket(id) {
-
+    const basketRowEl = basketEl
+        .querySelector('.basketRow[data-productId="${id}"]');
+    if (!basketRowEl) {
+        renderNewProductInBasket(id);
+        return;
+    }
+    basketRowEl.querySelector('.productCount').textContent = basket[id].count;
+    basketRowEl.querySelector('.productTotalRow')
+        .textContent = basket[id].count * basket[id].price;
 }
 function renderNewProductInBasket(productId) {
     const productRow =
@@ -50,6 +58,12 @@ function renderNewProductInBasket(productId) {
             <div>${basket[productId].name}</div>
             <div>
                 <span class="productCount">${basket[productId].count}</span>
+            </div>
+            <div>${basket[productId].price}</div>
+            <div>
+                $<span class="productTotalRow">
+                    ${(basket[productId].price * basket[productId].count).toFixed(2)}
+                </span>
             </div>
         </div>
 
